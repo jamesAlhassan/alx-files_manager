@@ -49,3 +49,7 @@ class DBClient {
     return numberOfFiles;
   }
 }
+
+const dbClient = new DBClient();
+
+export default dbClient;
