@@ -17,3 +17,11 @@ class RedisClient {
       // console.log('Redis client connected to the server');
     });
   }
+
+ /**
+   * Checks if connection to Redis is Alive
+   * @return {boolean} true if connection alive or false if not
+   */
+  isAlive() {
+    return this.client.connected;
+  }
