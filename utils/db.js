@@ -22,4 +22,13 @@ class DBClient {
       }
     });
   }
+
+
+	 /**
+   * Checks if connection to Redis is Alive
+   * @return {boolean} true if connection alive or false if not
+   */
+  isAlive() {
+    return Boolean(this.db);
+  }
 }
