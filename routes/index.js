@@ -30,6 +30,7 @@ function controllerRouting(app) {
     UsersController.getMe(req, res);
   });
 
+  // Auth Controller
   // should sign-in with authentication token
   router.get('/connect', (req, res) => {
     AuthController.getConnect(req, res);
