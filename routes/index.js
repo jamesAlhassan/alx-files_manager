@@ -17,3 +17,5 @@ function controllerRouting(app) {
     AppController.getStats(req, res);
   });
 }
+
+export default controllerRouting;
