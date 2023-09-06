@@ -1,6 +1,7 @@
 import express from 'express';
 import AppController from '../controllers/AppController';
 import UsersController from '../controllers/UsersController';
+import AuthController from '../controllers/AuthController';
 
 function controllerRouting(app) {
   const router = express.Router();
@@ -23,6 +24,11 @@ function controllerRouting(app) {
   // should create a new user in DB
   router.post('/users', (req, res) => {
     UsersController.postNew(req, res);
+  });
+
+  // should sign-in with authentication token
+  router.get('/connect', (req, res) => {
+    AuthController.getConnect(req, res);
   });
 }
 
