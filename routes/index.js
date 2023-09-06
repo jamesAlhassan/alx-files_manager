@@ -1,6 +1,7 @@
 import express from 'express';
 import AppController from '../controllers/AppController';
 import UsersController from '../controllers/UsersController';
+import FilesController from '../controllers/FilesController';
 import AuthController from '../controllers/AuthController';
 
 function controllerRouting(app) {
@@ -39,6 +40,12 @@ function controllerRouting(app) {
   // Sign Out
   router.get('/disconnect', (req, res) => {
     AuthController.getDisconnect(req, res);
+  });
+
+  // Files Controller
+
+  router.post('/files', (req, res) => {
+    FilesController.postUpload(req, res);
   });
 }
 
