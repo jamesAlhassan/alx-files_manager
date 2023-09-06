@@ -42,6 +42,22 @@ class AuthController {
 
     return response.status(200).send({ token });
   }
+
+  /**
+   * Should sign-out the user based on the token
+   *
+   * Retrieve the user based on the token:
+   * status code 204
+   */
+  static async getDisconnect(request, response) {
+    const { userId, key } = await userUtils.getUserIdAndKey(request);
+
+    if (!userId) return response.status(401).send({ error: 'Unauthorized' });
+
+    await redisClient.del(key);
+
+    return response.status(204).send();
+  }
 }
 
 export default AuthController;
