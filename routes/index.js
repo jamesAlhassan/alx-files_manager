@@ -30,6 +30,11 @@ function controllerRouting(app) {
   router.get('/connect', (req, res) => {
     AuthController.getConnect(req, res);
   });
+
+  // Sign Out
+  router.get('/disconnect', (req, res) => {
+    AuthController.getDisconnect(req, res);
+  });
 }
 
 export default controllerRouting;
