@@ -138,6 +138,21 @@ const fileUtils = {
     return { error: null, newFile };
   },
 
+ /**
+   * Updates a file document in database
+   * @query {obj} query to find document to update
+   * @set {obj} object with query info to update in Mongo
+   * @return {object} updated file
+   */
+  async updateFile(query, set) {
+    const fileList = await dbClient.filesCollection.findOneAndUpdate(
+      query,
+      set,
+      { returnOriginal: false },
+    );
+    return fileList;
+  },
 };
+
 
 export default fileUtils;
