@@ -145,6 +145,25 @@ class FilesController {
 
     return response.status(200).send(fileList);
   }
+
+  /**
+   * Should set isPublic to true on the file document based on the ID
+   *
+   * Retrieve the user based on the token:
+   * If not found, return an error Unauthorized with a status code 401
+   * Update the value of isPublic to true
+   * And return the file document with a status code 200
+   */
+  static async putPublish(request, response) {
+    const { error, code, updatedFile } = await fileUtils.publishUnpublish(
+      request,
+      true,
+    );
+
+    if (error) return response.status(code).send({ error });
+
+    return response.status(code).send(updatedFile);
+  }
 }
 
 export default FilesController;
