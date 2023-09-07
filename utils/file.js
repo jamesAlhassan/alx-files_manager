@@ -84,6 +84,60 @@ const fileUtils = {
     const fileList = await dbClient.filesCollection.aggregate(query);
     return fileList;
   },
+
+  /**
+   * saves files to database and disk
+   * @userId {string} query used to find file
+   * @fileParams {obj} object with attributes of file to save
+   * @FOLDER_PATH {string} path to save file in disk
+   * @return {obj} object with error if present and file
+   */
+  async saveFile(userId, fileParams, FOLDER_PATH) {
+    const {
+      name, type, isPublic, data,
+    } = fileParams;
+    let { parentId } = fileParams;
+
+    if (parentId !== 0) parentId = ObjectId(parentId);
+
+    const query = {
+      userId: ObjectId(userId),
+      name,
+      type,
+      isPublic,
+      parentId,
+    };
+
+    if (fileParams.type !== 'folder') {
+      const fileNameUUID = uuidv4();
+
+      // const fileDataDecoded = Buffer.from(data, 'base64').toString('utf-8');
+      const fileDataDecoded = Buffer.from(data, 'base64');
+
+      const path = `${FOLDER_PATH}/${fileNameUUID}`;
+
+      query.localPath = path;
+
+      try {
+        await fsPromises.mkdir(FOLDER_PATH, { recursive: true });
+        await fsPromises.writeFile(path, fileDataDecoded);
+      } catch (err) {
+        return { error: err.message, code: 400 };
+      }
+    }
+
+    const result = await dbClient.filesCollection.insertOne(query);
+
+    // query.userId = query.userId.toString();
+    // query.parentId = query.parentId.toString();
+
+    const file = this.processFile(query);
+
+    const newFile = { id: result.insertedId, ...file };
+
+    return { error: null, newFile };
+  },
+
 };
 
 export default fileUtils;
