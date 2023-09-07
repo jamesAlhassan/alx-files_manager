@@ -63,6 +63,27 @@ const fileUtils = {
 
     return obj;
   },
+
+  /**
+   * gets file document from db
+   * @query {obj} query used to find file
+   * @return {object} file
+   */
+  async getFile(query) {
+    const file = await dbClient.filesCollection.findOne(query);
+    return file;
+  },
+
+  /**
+   * gets list of file documents from db belonging
+   * to a parent id
+   * @query {obj} query used to find file
+   * @return {Array} list of files
+   */
+  async getFilesOfParentId(query) {
+    const fileList = await dbClient.filesCollection.aggregate(query);
+    return fileList;
+  },
 };
 
 export default fileUtils;
