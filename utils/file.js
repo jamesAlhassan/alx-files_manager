@@ -209,6 +209,23 @@ const fileUtils = {
 
     return { error: null, code: 200, updatedFile };
   },
+
+  /**
+   * Transform _id into id in a file document
+   * @doc {object} document to be processed
+   * @return {object} processed document
+   */
+  processFile(doc) {
+    // Changes _id for id and removes localPath
+
+    const file = { id: doc._id, ...doc };
+
+    delete file.localPath;
+    delete file._id;
+
+    return file;
+  },
+
 };
 
 export default fileUtils;
