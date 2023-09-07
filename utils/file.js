@@ -226,6 +226,22 @@ const fileUtils = {
     return file;
   },
 
+  /**
+   * Checks if a file is public and belongs to a
+   * specific user
+   * @file {object} file to evaluate
+   * @userId {string} id of user to check ownership
+   * @return {boolean} true or false
+   */
+  isOwnerAndPublic(file, userId) {
+    if (
+      (!file.isPublic && !userId)
+      || (userId && file.userId.toString() !== userId && !file.isPublic)
+    ) { return false; }
+
+    return true;
+  },
+
 };
 
 export default fileUtils;
